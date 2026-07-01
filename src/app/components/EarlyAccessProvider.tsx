@@ -12,7 +12,8 @@ import EarlyAccessModal from "./EarlyAccessModal";
 
 type Ctx = {
   isOpen: boolean;
-  open: () => void;
+  prefillEmail: string;
+  open: (prefillEmail?: string) => void;
   close: () => void;
 };
 
@@ -32,8 +33,12 @@ export default function EarlyAccessProvider({
   children: ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [prefillEmail, setPrefillEmail] = useState("");
 
-  const open = useCallback(() => setIsOpen(true), []);
+  const open = useCallback((email?: string) => {
+    setPrefillEmail(email ?? "");
+    setIsOpen(true);
+  }, []);
   const close = useCallback(() => setIsOpen(false), []);
 
   // Close on ESC
@@ -57,9 +62,9 @@ export default function EarlyAccessProvider({
   }, [isOpen]);
 
   return (
-    <EarlyAccessContext.Provider value={{ isOpen, open, close }}>
+    <EarlyAccessContext.Provider value={{ isOpen, prefillEmail, open, close }}>
       {children}
-      <EarlyAccessModal isOpen={isOpen} onClose={close} />
+      <EarlyAccessModal isOpen={isOpen} onClose={close} prefillEmail={prefillEmail} />
     </EarlyAccessContext.Provider>
   );
 }

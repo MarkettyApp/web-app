@@ -22,7 +22,7 @@ export default function EarlyAccessButton({
       : "h-10 px-5 text-sm";
 
   return (
-    <button type="button" onClick={open} className={`${base} ${size} ${className ?? ""}`}>
+    <button type="button" onClick={() => open()} className={`${base} ${size} ${className ?? ""}`}>
       {children}
     </button>
   );

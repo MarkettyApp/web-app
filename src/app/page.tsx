@@ -2,6 +2,7 @@ import type { ReactNode, SVGProps } from "react";
 import Image from "next/image";
 import SiteHeader from "./components/SiteHeader";
 import EarlyAccessButton from "./components/EarlyAccessButton";
+import SignupEmailForm from "./components/SignupEmailForm";
 
 /* ------------------------------------------------------------------ */
 /* Shared atoms                                                        */
@@ -935,23 +936,7 @@ function SignupSection() {
               Join creators, businesses, manufacturers and communities preparing
               for a new era of commerce.
             </p>
-            <form className="mt-8 flex max-w-md items-center gap-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="h-12 flex-1 rounded-lg border border-neutral-300 bg-white px-4 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-brand-500 focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="h-12 rounded-lg bg-brand-500 px-5 text-sm font-semibold text-white hover:bg-brand-600"
-              >
-                Join Waitlist
-              </button>
-            </form>
-            <p className="mt-3 text-xs text-neutral-400">
-              We care about your data in our{" "}
-              <a href="#" className="text-neutral-500 underline">privacy policy</a>.
-            </p>
+            <SignupEmailForm />
           </div>
 
           {/* Mobile: single phone, no absolute positioning */}

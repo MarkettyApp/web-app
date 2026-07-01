@@ -22,18 +22,20 @@ function SubmitButton() {
 export default function EarlyAccessModal({
   isOpen,
   onClose,
+  prefillEmail = "",
 }: {
   isOpen: boolean;
   onClose: () => void;
+  prefillEmail?: string;
 }) {
   const [state, formAction] = useActionState(joinWaitlist, INITIAL);
   const nameRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
-  // Focus the first field when opened
+  // Focus: if email was prefilled, focus name (next field to fill). Otherwise
+  // focus name too — it's the first field either way.
   useEffect(() => {
     if (isOpen && state.status !== "success") {
-      // Slight delay so the transition doesn't fight focus
       const t = setTimeout(() => nameRef.current?.focus(), 30);
       return () => clearTimeout(t);
     }
@@ -94,6 +96,7 @@ export default function EarlyAccessModal({
           <form
             ref={formRef}
             action={formAction}
+            key={prefillEmail || "blank"}
             className="flex flex-col gap-4 px-6 py-6 sm:px-8 sm:py-8"
           >
             <div>
@@ -127,6 +130,7 @@ export default function EarlyAccessModal({
                 type="email"
                 required
                 autoComplete="email"
+                defaultValue={prefillEmail}
                 placeholder="you@company.com"
                 className="h-11 rounded-lg border border-neutral-300 bg-white px-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-brand-500 focus:outline-none"
               />
