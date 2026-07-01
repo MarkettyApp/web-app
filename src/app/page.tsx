@@ -165,45 +165,17 @@ const Icon = {
   ),
 };
 
-/* ------------------------------------------------------------------ */
-/* Phone mockup (used in hero + signup)                                */
-/* ------------------------------------------------------------------ */
-
-function PhoneFrame({
-  children,
-  className = "",
-  width = 260,
-  height = 540,
-}: {
-  children?: ReactNode;
-  className?: string;
-  width?: number;
-  height?: number;
-}) {
-  return (
-    <div
-      className={`relative rounded-[2.4rem] border-[10px] border-neutral-900 bg-neutral-900 shadow-2xl ${className}`}
-      style={{ width, height }}
-    >
-      <div className="absolute left-1/2 top-2 z-10 h-5 w-24 -translate-x-1/2 rounded-full bg-neutral-900" />
-      <div className="relative h-full w-full overflow-hidden rounded-[1.7rem] bg-white">
-        {children}
-      </div>
-    </div>
-  );
-}
-
 function HeroPhone() {
   return (
     <div className="relative flex items-center justify-center">
-      <div className="absolute -right-10 top-6 -z-10 h-[520px] w-[520px] rounded-full bg-neutral-100" aria-hidden />
+      <div className="absolute -right-10 top-6 -z-10 h-[620px] w-[620px] rounded-full bg-neutral-100" aria-hidden />
       <Image
         src="/hero-phone.png"
         alt="Marketty creator livestream on phone"
-        width={520}
-        height={760}
+        width={620}
+        height={900}
         priority
-        className="h-auto w-[300px] md:w-[360px] lg:w-[400px] drop-shadow-xl"
+        className="h-auto w-[340px] md:w-[440px] lg:w-[520px] drop-shadow-xl"
       />
     </div>
   );
@@ -853,76 +825,6 @@ function BeyondSection() {
   );
 }
 
-function StatsPhone({
-  pose = "front",
-}: {
-  pose?: "front" | "back";
-}) {
-  const offset = pose === "back" ? "scale-95 -rotate-6 opacity-95" : "";
-  return (
-    <div className={`relative ${offset}`}>
-      <PhoneFrame width={220} height={460}>
-        <div className="h-full w-full bg-white p-3">
-          {/* status bar */}
-          <div className="flex items-center justify-between text-[9px] font-semibold text-neutral-900">
-            <span>9:41</span>
-            <span className="flex items-center gap-1">●●● <span className="rounded-sm border border-neutral-900 px-1 text-[7px]">100</span></span>
-          </div>
-          {/* app header */}
-          <div className="mt-2 flex items-center justify-between">
-            <div className="flex items-center gap-1.5">
-              <span className="h-5 w-5 rounded-full bg-violet-500" />
-              <span className="text-[10px] font-semibold text-neutral-900">Untitled UI</span>
-            </div>
-            <span className="text-neutral-700">≡</span>
-          </div>
-          <div className="mt-3 text-[12px] font-bold text-neutral-900">Stats for Olivia Rhye</div>
-          <div className="mt-2 flex items-center gap-1.5">
-            <span className="rounded-full bg-white px-2 py-0.5 text-[9px] font-medium text-neutral-700 ring-1 ring-neutral-200">
-              <span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 align-middle" />
-              Messages
-            </span>
-            <span className="rounded-md bg-violet-500 px-2 py-0.5 text-[9px] font-semibold text-white">Edit</span>
-          </div>
-          <hr className="my-3 border-neutral-200" />
-          <div className="text-[11px] font-semibold text-neutral-900">Profile views</div>
-          <div className="mt-2 inline-flex rounded-md bg-neutral-100 p-0.5 text-[9px] font-medium text-neutral-600">
-            <span className="rounded bg-white px-2 py-0.5 text-neutral-900 shadow-sm">12 months</span>
-            <span className="px-2 py-0.5">30 days</span>
-            <span className="px-2 py-0.5">7 days</span>
-          </div>
-          <div className="mt-3 h-44 w-full">
-            <svg viewBox="0 0 200 120" className="h-full w-full" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="fillA" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0%" stopColor="#a78bfa" stopOpacity="0.35" />
-                  <stop offset="100%" stopColor="#a78bfa" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M0,100 L8,90 L16,95 L24,80 L32,88 L40,70 L48,78 L56,55 L64,72 L72,48 L80,65 L88,40 L96,58 L104,35 L112,55 L120,42 L128,30 L136,48 L144,25 L152,40 L160,22 L168,38 L176,18 L184,32 L192,15 L200,28 L200,120 L0,120 Z"
-                fill="url(#fillA)"
-              />
-              <polyline
-                fill="none"
-                stroke="#a78bfa"
-                strokeWidth="1.4"
-                points="0,100 8,90 16,95 24,80 32,88 40,70 48,78 56,55 64,72 72,48 80,65 88,40 96,58 104,35 112,55 120,42 128,30 136,48 144,25 152,40 160,22 168,38 176,18 184,32 192,15 200,28"
-              />
-              <polyline
-                fill="none"
-                stroke="#6d28d9"
-                strokeWidth="1.4"
-                points="0,110 10,95 20,100 30,85 40,95 50,80 60,90 70,68 80,82 90,60 100,75 110,55 120,68 130,50 140,62 150,46 160,55 170,40 180,52 190,35 200,42"
-              />
-            </svg>
-          </div>
-        </div>
-      </PhoneFrame>
-    </div>
-  );
-}
-
 function SignupSection() {
   return (
     <section className="bg-white py-14 md:py-20" id="about">
@@ -939,23 +841,15 @@ function SignupSection() {
             <SignupEmailForm />
           </div>
 
-          {/* Mobile: single phone, no absolute positioning */}
-          <div className="relative flex justify-center md:hidden">
-            <div className="absolute inset-x-0 top-4 bottom-4 -z-10 rounded-3xl bg-neutral-100/70" aria-hidden />
-            <div className="py-6">
-              <StatsPhone />
-            </div>
-          </div>
-
-          {/* Desktop: overlapping phones */}
-          <div className="relative hidden min-h-[480px] items-center justify-center md:flex">
+          <div className="relative flex items-center justify-center">
             <div className="absolute inset-0 -z-10 rounded-3xl bg-neutral-100/70" aria-hidden />
-            <div className="absolute left-6 top-10">
-              <StatsPhone pose="back" />
-            </div>
-            <div className="absolute right-6 top-2">
-              <StatsPhone />
-            </div>
+            <Image
+              src="/signup-phones.png"
+              alt="Marketty analytics preview on phone"
+              width={900}
+              height={720}
+              className="h-auto w-full max-w-[520px] py-4"
+            />
           </div>
         </div>
       </Container>
