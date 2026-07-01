@@ -1,28 +1,24 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
+import EarlyAccessButton from "./EarlyAccessButton";
 
 const LINKS = ["Solutions", "Ecosystem", "Businesses", "Creators", "About"];
 
 function Logo() {
   return (
-    <div className="flex items-center gap-2">
-      <svg viewBox="0 0 32 32" className="h-8 w-8" aria-hidden>
-        <path
-          d="M11 11 Q11 6 16 6 Q21 6 21 11"
-          stroke="var(--brand-500)"
-          strokeWidth="2.2"
-          fill="none"
-          strokeLinecap="round"
-        />
-        <rect x="6" y="10" width="20" height="19" rx="3.5" fill="var(--brand-500)" />
-        <circle cx="13" cy="19" r="1.6" fill="#ffffff" />
-        <circle cx="19" cy="19" r="1.6" fill="#ffffff" />
-      </svg>
-      <span className="text-lg font-bold tracking-tight text-neutral-900">
-        Marketty<span className="text-brand-500">.</span>
-      </span>
-    </div>
+    <Link href="/" className="flex items-center" aria-label="Marketty home">
+      <Image
+        src="/logo.png"
+        alt="Marketty"
+        width={480}
+        height={120}
+        priority
+        className="h-8 w-auto"
+      />
+    </Link>
   );
 }
 
@@ -43,12 +39,9 @@ export default function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            className="hidden h-10 items-center justify-center rounded-full bg-brand-500 px-5 text-sm font-medium text-white shadow-sm transition hover:bg-brand-600 md:inline-flex"
-          >
-            Get Early Access
-          </button>
+          <div className="hidden md:block">
+            <EarlyAccessButton>Get Early Access</EarlyAccessButton>
+          </div>
 
           <button
             type="button"
@@ -84,12 +77,9 @@ export default function SiteHeader() {
                 {l}
               </a>
             ))}
-            <button
-              type="button"
-              className="mt-2 inline-flex h-11 items-center justify-center rounded-full bg-brand-500 px-5 text-sm font-semibold text-white"
-            >
-              Get Early Access
-            </button>
+            <div className="mt-2" onClick={() => setOpen(false)}>
+              <EarlyAccessButton className="w-full">Get Early Access</EarlyAccessButton>
+            </div>
           </div>
         </div>
       )}

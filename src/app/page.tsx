@@ -1,6 +1,7 @@
 import type { ReactNode, SVGProps } from "react";
 import Image from "next/image";
 import SiteHeader from "./components/SiteHeader";
+import EarlyAccessButton from "./components/EarlyAccessButton";
 
 /* ------------------------------------------------------------------ */
 /* Shared atoms                                                        */
@@ -19,25 +20,18 @@ function Container({
 }
 
 function Logo({ tone = "dark" }: { tone?: "dark" | "light" }) {
-  const text = tone === "dark" ? "text-neutral-900" : "text-white";
+  // On the dark footer the source logo (dark wordmark on transparent bg) would
+  // disappear, so we lighten it via a CSS filter until a dedicated light
+  // variant exists at /logo-light.png.
+  const filter = tone === "light" ? "brightness-0 invert" : "";
   return (
-    <div className="flex items-center gap-2">
-      <svg viewBox="0 0 32 32" className="h-8 w-8" aria-hidden>
-        <path
-          d="M11 11 Q11 6 16 6 Q21 6 21 11"
-          stroke="var(--brand-500)"
-          strokeWidth="2.2"
-          fill="none"
-          strokeLinecap="round"
-        />
-        <rect x="6" y="10" width="20" height="19" rx="3.5" fill="var(--brand-500)" />
-        <circle cx="13" cy="19" r="1.6" fill="#ffffff" />
-        <circle cx="19" cy="19" r="1.6" fill="#ffffff" />
-      </svg>
-      <span className={`text-lg font-bold tracking-tight ${text}`}>
-        Marketty<span className="text-brand-500">.</span>
-      </span>
-    </div>
+    <Image
+      src="/logo.png"
+      alt="Marketty"
+      width={480}
+      height={120}
+      className={`h-8 w-auto ${filter}`}
+    />
   );
 }
 
@@ -243,7 +237,7 @@ function Hero() {
               <Icon.Play className="h-3.5 w-3.5 text-brand-600" />
               Watch Demo
             </GhostButton>
-            <PrimaryButton className="h-11 px-6 text-base">Get Early Access</PrimaryButton>
+            <EarlyAccessButton variant="hero">Get Early Access</EarlyAccessButton>
           </div>
         </div>
         <div className="flex justify-center md:justify-end">

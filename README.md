@@ -18,10 +18,36 @@ Built with the App Router on Next.js 16, React 19, TypeScript, and Tailwind CSS 
 
 ```bash
 npm install
+cp .env.local.example .env.local   # then fill in the values
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+> **Node ≥ 20.9** is required by Next.js 16. If you use `nvm`, run
+> `nvm use 22` (or install with `nvm install 22`).
+
+## Waitlist + admin setup
+
+The "Get Early Access" CTA opens a modal (Name / Email / Country) that writes
+into a Supabase `waitlist` table. A password-protected `/admin` page lets you
+view and export submissions.
+
+1. **Create a Supabase project** — https://supabase.com/dashboard
+2. **Create the table** — open Supabase → SQL Editor → New query, paste
+   [`supabase-schema.sql`](supabase-schema.sql), run it.
+3. **Fill in `.env.local`** — copy from [`.env.local.example`](.env.local.example):
+   - `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` from
+     Supabase → Project Settings → API.
+   - `ADMIN_PASSWORD` — the password you'll use at `/admin`.
+   - `ADMIN_SESSION_SECRET` — any long random string
+     (e.g. `openssl rand -hex 32`).
+4. Restart the dev server so the new env is picked up.
+5. Visit `/admin`, sign in, and you'll see submissions with search + CSV export.
+
+The service-role key is only ever used server-side (in
+`src/lib/supabase.ts`, which is marked `import "server-only"`). It's never
+exposed to the browser.
 
 ## Scripts
 
@@ -37,13 +63,27 @@ Open [http://localhost:3000](http://localhost:3000).
 ```
 src/
   app/
+    actions.ts                       # Server actions: joinWaitlist, admin login/logout
     components/
-      SiteHeader.tsx     # Client component — sticky nav + mobile hamburger
-    globals.css          # Tailwind v4 import + brand color tokens
-    layout.tsx           # Root layout, fonts, metadata
-    page.tsx             # The landing page (all sections live here)
+      SiteHeader.tsx                 # Sticky nav + mobile hamburger (client)
+      EarlyAccessProvider.tsx        # Modal open-state context (client)
+      EarlyAccessModal.tsx           # The Get Early Access modal (client)
+      EarlyAccessButton.tsx          # CTA that opens the modal (client)
+    admin/
+      page.tsx                       # Password-gated waitlist dashboard
+      LoginForm.tsx
+      SubmissionsTable.tsx
+    globals.css                      # Tailwind v4 import + brand tokens
+    layout.tsx                       # Root layout — wraps children in EarlyAccessProvider
+    page.tsx                         # Landing page (all marketing sections here)
+  lib/
+    env.ts                           # Server-only env reader
+    supabase.ts                      # Server-only service-role client
+    admin-auth.ts                    # Signed-cookie admin session
 public/
-  hero-phone.png         # Hero phone mockup image
+  hero-phone.png                     # Hero phone mockup image
+supabase-schema.sql                  # Waitlist table DDL
+.env.local.example                   # Env template
 ```
 
 All landing-page sections (hero, problem, ecosystem, trust, opportunities,
