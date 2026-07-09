@@ -49,6 +49,29 @@ The service-role key is only ever used server-side (in
 `src/lib/supabase.ts`, which is marked `import "server-only"`). It's never
 exposed to the browser.
 
+## Keeping Supabase awake
+
+Supabase pauses free-tier projects after **7 days of no database activity**.
+[`vercel.json`](vercel.json) registers a daily Vercel Cron job that hits
+[`/api/ping`](src/app/api/ping/route.ts), which runs a cheap read against the
+`waitlist` table — enough to reset Supabase's inactivity timer.
+
+To enable it:
+
+1. Add `CRON_SECRET` to your Vercel project env vars (Production + Preview +
+   Development). Any long random string; `openssl rand -hex 32` works.
+2. Deploy. Vercel provisions the cron automatically from `vercel.json` and
+   attaches `Authorization: Bearer $CRON_SECRET` to every scheduled request.
+3. Verify in the Vercel dashboard → Project → Cron Jobs.
+
+Vercel Hobby allows daily crons; we schedule `0 3 * * *` (03:00 UTC). Manual
+test locally:
+
+```bash
+curl -H "Authorization: Bearer $CRON_SECRET" http://localhost:3000/api/ping
+# → { "ok": true, "pingedAt": "…", "waitlistCount": N }
+```
+
 ## Scripts
 
 | Command         | What it does                                  |
